@@ -33,6 +33,9 @@ func (b *BuildInfo) getVersion(request *restful.Request, response *restful.Respo
 
 // return yaml configuration suitable for reproducing an identical build
 func (b *BuildInfo) getYAML(request *restful.Request, response *restful.Response) {
+	var yml []byte // returned yaml
+	var err error  // error holder
+
 	// nothing we can do if config is undefined
 	if b.GlideConfig == nil {
 		response.WriteErrorString(http.StatusNoContent, "missing glide config")
@@ -40,8 +43,7 @@ func (b *BuildInfo) getYAML(request *restful.Request, response *restful.Response
 	}
 
 	// attempt to generate yaml
-	y, err := b.GlideConfig.Marshal()
-	if err != nil {
+	if yml, err = b.GlideConfig.Marshal(); err != nil {
 		response.WriteError(http.StatusInternalServerError, err)
 		return
 	}
@@ -54,6 +56,9 @@ func (b *BuildInfo) getYAML(request *restful.Request, response *restful.Response
 
 // return yaml configuration suitable for reproducing an identical build
 func (b *BuildInfo) getLockfile(request *restful.Request, response *restful.Response) {
+	var yml []byte // returned yaml
+	var err error  // error holder
+
 	// nothing we can do if config is undefined
 	if b.GlideLockfile == nil {
 		response.WriteErrorString(http.StatusNoContent, "missing glide Lockfile")
@@ -61,8 +66,7 @@ func (b *BuildInfo) getLockfile(request *restful.Request, response *restful.Resp
 	}
 
 	// attempt to generate yaml
-	y, err := b.GlideLockfile.Marshal()
-	if err != nil {
+	if yml, err = b.GlideLockfile.Marshal(); err != nil {
 		response.WriteError(http.StatusInternalServerError, err)
 		return
 	}
@@ -70,7 +74,7 @@ func (b *BuildInfo) getLockfile(request *restful.Request, response *restful.Resp
 	// return our response
 	response.ResponseWriter.Header().Set("Content-Type", "application/x-yaml")
 	response.ResponseWriter.Header().Set("Content-Disposition", "inline; filename=\"glide.lock\"")
-	response.ResponseWriter.Write(y)
+	response.ResponseWriter.Write(yml)
 }
 
 // Routes returns restful service routes

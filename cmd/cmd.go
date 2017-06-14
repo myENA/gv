@@ -48,25 +48,6 @@ func (c *Command) Run(args []string) int {
 	return c.showVersion(details)
 }
 
-// Synopsis shows the command summary
-func (c *Command) Synopsis() string {
-	return "Display application version information"
-}
-
-// Help shows the detailed command options
-func (c *Command) Help() string {
-	str := `Usage: %s version [options]
-
-	Display application version and dependency information.
-
-Options:
-
-	-d    Display detailed dependency information
-`
-	// return help
-	return fmt.Sprintf(str, c.buildInfo.Name)
-}
-
 // show information output
 func (c *Command) showVersion(detail bool) int {
 	// print standard version
@@ -87,12 +68,11 @@ func (c *Command) showVersion(detail bool) int {
 		}
 		// check struct
 		if c.buildInfo.GlideLockfile != nil {
-			// get imports
-			imports := c.buildInfo.GlideLockfile.Imports
 			// print header
-			c.ui.Output(fmt.Sprintf("\nImports %d Packages", len(imports)))
+			c.ui.Output(fmt.Sprintf("\nImports %d Packages",
+				len(c.buildInfo.GlideLockfile.Imports)))
 			// loop through imports
-			for idx, pkg := range imports {
+			for idx, pkg := range c.buildInfo.GlideLockfile.Imports {
 				c.ui.Output(fmt.Sprintf("[%03d] % 8s %s", idx+1, pkg.Version[0:8], pkg.Name))
 			}
 		}
@@ -100,4 +80,23 @@ func (c *Command) showVersion(detail bool) int {
 
 	// all good
 	return 0
+}
+
+// Synopsis shows the command summary
+func (c *Command) Synopsis() string {
+	return "Display application version information"
+}
+
+// Help shows the detailed command options
+func (c *Command) Help() string {
+	str := `Usage: %s version [options]
+
+	Display application version and dependency information.
+
+Options:
+
+	-d    Display detailed dependency information
+`
+	// return help
+	return fmt.Sprintf(str, c.buildInfo.Name)
 }
