@@ -1,0 +1,33 @@
+hash: ac6f451bf6a69f46cf9ccbfcd992a5f9f2b9795670c1ce0eb32600b73bdb8bfc
+updated: 2017-06-14T13:51:27.39940395-05:00
+imports:
+- name: github.com/armon/go-radix
+  version: 4239b77079c7b5d1243b7b4736304ce8ddb6f0f2
+- name: github.com/bgentry/speakeasy
+  version: 675b82c74c0ed12283ee81ba8a534c8982c07b85
+- name: github.com/emicklei/go-restful
+  version: ff4f55a206334ef123e4f79bbf348980da81ca46
+  subpackages:
+  - log
+- name: github.com/Masterminds/glide
+  version: 8032c28b91ee6b8b71655bb622f5aac497011723
+  subpackages:
+  - cfg
+  - godep/strip
+  - mirrors
+  - msg
+  - path
+  - util
+- name: github.com/Masterminds/vcs
+  version: 3084677c2c188840777bff30054f2b553729d329
+- name: github.com/mattn/go-isatty
+  version: dda3de49cbfcec471bd7a70e6cc01fcc3ff90109
+- name: github.com/mitchellh/cli
+  version: 494eb006fe29e9dc75fea6da4df4818f7e046b73
+- name: golang.org/x/sys
+  version: 075e574b89e4c2d22f2286a7e2b919519c6f3547
+  subpackages:
+  - unix
+- name: gopkg.in/yaml.v2
+  version: a83829b6f1293c91addabc89d0571c246397bbf4
+testImports: []

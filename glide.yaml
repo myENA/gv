@@ -1,0 +1,8 @@
+package: github.com/myENA/gv
+import:
+- package: github.com/Masterminds/glide
+  version: v0.12.3
+  subpackages:
+  - cfg
+- package: github.com/emicklei/go-restful
+- package: github.com/mitchellh/cli
