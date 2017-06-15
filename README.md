@@ -18,7 +18,7 @@ BUILD_COMMIT="$(git rev-parse --verify HEAD)"
 BUILD_NUMBER="${BAMBOO_BUILD:-00}" ## exported by build system
 
 ## encode import data to avoid problems with special characters
-GLIDE_DATA=$(base64 glide.yaml | sed ':a;N;$!ba;s/\n//g')
+GLIDE_YAML=$(base64 glide.yaml | sed ':a;N;$!ba;s/\n//g')
 GLIDE_LOCK=$(base64 glide.lock | sed ':a;N;$!ba;s/\n//g')
 
 ## build it
@@ -29,7 +29,7 @@ go build -o "${BUILD_NAME}" -ldflags "\
 -X main.buildBranch=${BUILD_BRANCH} \
 -X main.buildCommit=${BUILD_COMMIT} \
 -X main.buildNumber=${BUILD_NUMBER} \
--X main.glideData=${GLIDE_DATA} \
+-X main.glideYAML=${GLIDE_YAML} \
 -X main.glideLock=${GLIDE_LOCK}"
 ```
 
@@ -44,22 +44,21 @@ var (
 	buildBranch  string
 	buildCommit  string
 	buildNumber  string
-	glideData    string
+	glideYAML    string
 	glideLock    string
 	// build info struct
 	buildInfo *gv.BuildInfo
 )
 
-// populate build info
 buildInfo = &gv.BuildInfo{
-	Name:          buildName,
-	Version:       buildVersion,
-	Date:          buildDate,
-	Branch:        buildBranch,
-	Commit:        buildCommit,
-	Build:         buildNumber,
-	GlideData:     glideData,
-	GlideLockData: glideLock,
+	Name:      buildName,
+	Version:   buildVersion,
+	Date:      buildDate,
+	Branch:    buildBranch,
+	Commit:    buildCommit,
+	Build:     buildNumber,
+	GlideYAML: glideYAML,
+	GlideLock: glideLock,
 }
 ```
 

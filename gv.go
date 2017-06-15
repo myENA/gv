@@ -16,8 +16,8 @@ type BuildInfo struct {
 	Branch        string          `json:"BuildBranch,omitempty"`
 	Commit        string          `json:"BuildCommit,omitempty"`
 	Build         string          `json:"BuildNumber,omitempty"`
-	GlideData     string          `json:"-"`
-	GlideLockData string          `json:"-"`
+	GlideYAML     string          `json:"-"`
+	GlideLock     string          `json:"-"`
 	GlideConfig   *glide.Config   `json:"Glide,omitempty"`
 	GlideLockfile *glide.Lockfile `json:"GlideLock,omitempty"`
 }
@@ -25,9 +25,9 @@ type BuildInfo struct {
 // Init initializes a BuildInfo struct
 func (b *BuildInfo) Init() error {
 	// check glide data
-	if b.GlideData != "" && b.GlideConfig == nil {
+	if b.GlideYAML != "" && b.GlideConfig == nil {
 		// decode data
-		dec, err := base64.StdEncoding.DecodeString(b.GlideData)
+		dec, err := base64.StdEncoding.DecodeString(b.GlideYAML)
 		if err != nil {
 			return err
 		}
@@ -39,10 +39,10 @@ func (b *BuildInfo) Init() error {
 		b.GlideConfig = cfg
 	}
 
-	// check glide lock data
-	if b.GlideLockData != "" && b.GlideLockfile == nil {
+	// check glide lock
+	if b.GlideLock != "" && b.GlideLockfile == nil {
 		// decode data
-		dec, err := base64.StdEncoding.DecodeString(b.GlideLockData)
+		dec, err := base64.StdEncoding.DecodeString(b.GlideLock)
 		if err != nil {
 			return err
 		}

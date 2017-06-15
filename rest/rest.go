@@ -51,7 +51,7 @@ func (b *BuildInfo) getYAML(request *restful.Request, response *restful.Response
 	// return our response
 	response.ResponseWriter.Header().Set("Content-Type", "application/x-yaml")
 	response.ResponseWriter.Header().Set("Content-Disposition", "inline; filename=\"glide.yaml\"")
-	response.ResponseWriter.Write(y)
+	response.ResponseWriter.Write(yml)
 }
 
 // return yaml configuration suitable for reproducing an identical build
