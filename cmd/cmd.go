@@ -50,13 +50,39 @@ func (c *Command) Run(args []string) int {
 
 // show information output
 func (c *Command) showVersion(detail bool) int {
-	// print standard version
-	c.ui.Output(fmt.Sprintf("==>\t%s v%s\nBuild:\t%s\nBranch:\t%s\nDate:\t%s",
+	// print app name and version - should always be present
+	c.ui.Output(fmt.Sprintf("==>\t%s v%s",
 		c.buildInfo.Name,
 		c.buildInfo.Version,
-		c.buildInfo.Build,
-		c.buildInfo.Branch,
-		c.buildInfo.Date))
+	))
+
+	// print build if present
+	if c.buildInfo.Build != "" {
+		c.ui.Output(fmt.Sprintf("Build:\t%s",
+			c.buildInfo.Build,
+		))
+	}
+
+	// print branch if present
+	if c.buildInfo.Branch != "" {
+		c.ui.Output(fmt.Sprintf("Branch:\t%s",
+			c.buildInfo.Branch,
+		))
+	}
+
+	// print commit if present
+	if c.buildInfo.Commit != "" {
+		c.ui.Output(fmt.Sprintf("Commit:\t%s",
+			c.buildInfo.Commit,
+		))
+	}
+
+	// print date if present
+	if c.buildInfo.Date != "" {
+		c.ui.Output(fmt.Sprintf("Date:\t%s",
+			c.buildInfo.Date,
+		))
+	}
 
 	// show details if asked
 	if detail {
